@@ -1,0 +1,105 @@
+/* --- Hacemos full-width los contenedores del catálogo --- */
+.container-fluid.px-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  background: #f8f9fa;
+  border-right: 1px solid #ddd;
+}
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sidebar a:hover {
+  color: #005b96;
+}
+
+/* --- Sección de productos --- */
+.section-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #2c3e50;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: #ffb703;
+  display: block;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* --- Cards --- */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.card-img-top {
+  object-fit: contain;
+  background: #fff;
+  height: 200px;
+}
+@media (max-width: 767.98px) {
+  .card-img-top {
+    height: 150px;
+  }
+}
+
+/* Badges */
+.discount-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.85em;
+}
+.top-sell-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.75em;
+}
+
+/* --- Footer full width sin huecos --- */
+#contacto {
+  background: #2c3e50;
+  color: #ccc;
+  width: 100%;
+  margin: 0;
+}
+#contacto a {
+  color: #ffb703;
+  text-decoration: none;
+}
+#contacto a:hover {
+  text-decoration: underline;
+}
+
+/* --- Móviles: ajustamos padding --- */
+@media (max-width: 767.98px) {
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  .sidebar,
+  main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
