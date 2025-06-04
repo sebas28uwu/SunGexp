@@ -158,55 +158,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Script de registro -->
-  <script>
-  (function(){
-    const API = 'https://20.11.51.152';  // IP pública VM
-
-    document.getElementById('formRegister').addEventListener('submit', async e=>{
-      e.preventDefault();
-      const f = e.target;
-      const role = f.role.value;
-      // básicos
-      const payload = {
-        name:     f.firstName.value + ' ' + f.lastName.value,
-        email:    f.email.value,
-        password: f.password.value
-      };
-
-      // si es vendedor, pido más datos
-      if(role === 'vendedor'){
-        payload.shop_name   = prompt('¿Nombre del taller?','');
-        payload.region      = prompt('¿Región?','');
-        payload.description = prompt('Descripción breve','');
-      }
-
-      const url = role === 'cliente'
-        ? `${API}/register_user.php`
-        : `${API}/register_vendor.php`;
-
-      try {
-        const resp = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const json = await resp.json();
-        if(json.status === 'success'){
-          alert('¡Registro exitoso!'); 
-          // guardo en localStorage
-          localStorage.setItem('user', JSON.stringify({
-            id_usuario: json.id_usuario || json.id_vendedor,
-            rol: role
-          }));
-          window.location.href = 'index.html';
-        } else {
-          alert('Error: ' + json.message);
-        }
-      } catch(err){
-        alert('Error de red: '+err);
-      }
-    });
-  })();
-  </script>
+<script src="js/register.js"></script>
 </body>
 </html>
