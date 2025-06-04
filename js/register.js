@@ -1,4 +1,4 @@
-document.getElementById('registroForm').onsubmit = function(e) {
+document.getElementById('formRegister').onsubmit = function(e) {
   e.preventDefault(); // Evita que el formulario recargue la página por defecto.
 
   // Recoge los valores de los campos del formulario.
