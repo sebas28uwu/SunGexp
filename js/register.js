@@ -1,36 +1,77 @@
-document.getElementById('formRegister').onsubmit = function(e) {
-  e.preventDefault(); // Evita que el formulario recargue la página por defecto.
+// Nos aseguramos de que el DOM esté cargado antes de manipularlo
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('formRegister');
+  const mensajeDiv = document.getElementById('mensaje');
 
-  // Recoge los valores de los campos del formulario.
-  const nombre = this.nombre.value;
-  const apellido = this.apellido.value;
-  const correo = this.correo.value;
-  const contrasena = this.contrasena.value;
-  const confirmarContrasena = this.confirmarContrasena.value;
-  const rol = this.rol.value;
+  form.onsubmit = async function(e) {
+    e.preventDefault(); // Evita que el formulario recargue la página
 
-  // Valida que las contraseñas sean iguales antes de continuar.
-  if (contrasena !== confirmarContrasena) {
-    document.getElementById('mensaje').textContent = "Las contraseñas no coinciden.";
-    return; // Sale de la función y no continúa el registro.
-  }
+    // --- 1) Leemos cada campo por su ID ---
+    const nombre     = document.getElementById('firstName').value.trim();
+    const apellido   = document.getElementById('lastName').value.trim();
+    const correo     = document.getElementById('email').value.trim();
+    const contrasena = document.getElementById('password').value;
+    const confirmar  = document.getElementById('confirmPassword').value;
 
-  // Envia los datos como JSON al API PHP usando fetch.
-  fetch('api_registrar_usuario.php', {
-    method: 'POST', // Método HTTP POST.
-    headers: { 'Content-Type': 'application/json' }, // Le dice al servidor que los datos están en formato JSON.
-    body: JSON.stringify({
-      nombre, apellido, correo, contrasena, rol // Convierte los datos a JSON.
-    })
-  })
-  .then(r => r.json()) // Convierte la respuesta de la API (que también es JSON) a objeto JS.
-  .then(data => {
-    // Si el registro fue exitoso, muestra mensaje de éxito.
-    if (data.exito) {
-      document.getElementById('mensaje').textContent = "¡Registro exitoso!";
-    } else {
-      // Si hubo error, muestra el mensaje de error enviado desde PHP.
-      document.getElementById('mensaje').textContent = "Error: " + data.error;
+    // Para leer el rol (radio button)
+    let rol = '';
+    const radioSeleccionado = document.querySelector('input[name="role"]:checked');
+    if (radioSeleccionado) {
+      rol = radioSeleccionado.value; // "cliente" o "vendedor"
     }
-  });
-};
+
+    // --- 2) Validaciones básicas en el front-end ---
+    if (!nombre || !apellido || !correo || !contrasena || !confirmar || !rol) {
+      mensajeDiv.textContent = 'Por favor completa todos los campos.';
+      mensajeDiv.style.color = 'red';
+      return;
+    }
+
+    if (contrasena !== confirmar) {
+      mensajeDiv.textContent = 'Las contraseñas no coinciden.';
+      mensajeDiv.style.color = 'red';
+      return;
+    }
+
+    // (Opcional) Aquí podrías validar formato de correo, longitud de contraseña, etc.
+
+    // --- 3) Armamos el payload en formato JSON ---
+    const payload = {
+      nombre: nombre,
+      apellido: apellido,
+      correo: correo,
+      contrasena: contrasena,
+      rol: rol
+    };
+
+    // --- 4) Enviamos al API PHP ---
+    try {
+      const resp = await fetch('api_registrar_usuario.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // Si el servidor responde con un código distinto a 200, forzamos un error
+      if (!resp.ok) {
+        throw new Error(`HTTP error! status: ${resp.status}`);
+      }
+
+      const data = await resp.json();
+
+      // --- 5) Mostramos resultado en pantalla ---
+      if (data.exito) {
+        mensajeDiv.textContent = '¡Registro exitoso!';
+        mensajeDiv.style.color = 'green';
+        // Opcional: redirigir o limpiar formulario
+        // window.location.href = 'index.html';
+      } else {
+        mensajeDiv.textContent = 'Error: ' + data.error;
+        mensajeDiv.style.color = 'red';
+      }
+    } catch (err) {
+      mensajeDiv.textContent = 'Error de red o del servidor: ' + err.message;
+      mensajeDiv.style.color = 'red';
+    }
+  };
+});
