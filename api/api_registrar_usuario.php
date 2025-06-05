@@ -1,48 +1,69 @@
 <?php
-header('Content-Type: application/json'); // Indica que la respuesta será JSON.
+// Le decimos al cliente que la respuesta será JSON
+header('Content-Type: application/json');
+// En caso de que quieras aceptar peticiones desde otros orígenes (CORS)
+header('Access-Control-Allow-Origin: *');
 
-// Lee el JSON enviado por el JavaScript.
+// Leemos el JSON que envía el front-end
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Asigna cada campo del JSON a una variable PHP.
-$nombre = $data['nombre'];
-$apellido = $data['apellido'];
-$correo = $data['correo'];
-$contrasena = $data['contrasena'];
-$rol = $data['rol'];
+// Validación básica de campos recibidos
+$nombre     = trim($data['nombre']     ?? '');
+$apellido   = trim($data['apellido']   ?? '');
+$correo     = trim($data['correo']     ?? '');
+$contrasena = $data['contrasena']      ?? '';
+$rol        = $data['rol']             ?? '';
 
-// Hashea la contraseña antes de guardarla (más seguro).
+if (!$nombre || !$apellido || !$correo || !$contrasena || !$rol) {
+    echo json_encode([
+      'exito' => false,
+      'error' => 'Faltan campos obligatorios'
+    ]);
+    exit;
+}
+
+// Hasheamos la contraseña antes de almacenarla
 $hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-// Conexión a la base de datos (modifica con tus propios datos).
+// ** Configura aquí tu conexión a la base de datos ** 
+// (en este ejemplo, a Azure SQL Server; si fuera MySQL local, cambiaría el DSN).
 $serverName = 'sl-sungexp-prod-0001.database.windows.net';
-$database = 'database-sungexp';
-$username = 'adminuserdb'; 
-$password = 'Basededatos1@';
-
+$database   = 'database-sungexp';
+$username   = 'adminuserdb';
+$password   = 'Basededatos1@';
 
 try {
-    // Crea una nueva conexión usando PDO.
+    // Conexión con PDO para SQL Server
     $conn = new PDO("sqlsrv:server=$serverName;Database=$database", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Verifica que el correo no exista ya.
+    // 1) Verificamos que no exista ya un usuario con el mismo correo
     $stmt = $conn->prepare("SELECT id FROM usuarios WHERE correo = ?");
     $stmt->execute([$correo]);
     if ($stmt->fetch()) {
-        // Si existe, responde con error y termina.
-        echo json_encode(['exito' => false, 'error' => 'Correo ya registrado']);
+        echo json_encode([
+          'exito' => false,
+          'error' => 'Correo ya registrado'
+        ]);
         exit;
     }
 
-    // Inserta el nuevo usuario en la base de datos.
-    $stmt = $conn->prepare("INSERT INTO usuarios (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)");
+    // 2) Insertamos el nuevo usuario
+    $stmt = $conn->prepare("
+      INSERT INTO usuarios (nombre, apellido, correo, contrasena, rol)
+      VALUES (?, ?, ?, ?, ?)
+    ");
     $stmt->execute([$nombre, $apellido, $correo, $hash, $rol]);
 
-    // Si todo salió bien, responde con éxito.
-    echo json_encode(['exito' => true]);
+    // 3) Si todo salió bien, devolvemos éxito
+    echo json_encode([
+      'exito' => true
+    ]);
 } catch (Exception $e) {
-    // Si hubo algún error (de conexión, SQL, etc), responde con ese error.
-    echo json_encode(['exito' => false, 'error' => $e->getMessage()]);
+    // Si hubo cualquier error (conexión, SQL, etc.), devolvemos el mensaje
+    echo json_encode([
+      'exito' => false,
+      'error' => $e->getMessage()
+    ]);
 }
 ?>
