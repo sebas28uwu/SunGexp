@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const mensajeDiv = document.getElementById('mensaje');
 
   form.onsubmit = async function(e) {
-    e.preventDefault(); // Evita que el formulario recargue la página
+    e.preventDefault(); // Evita que el formulario recargue la página por defecto
 
     // --- 1) Leemos cada campo por su ID ---
     const nombre     = document.getElementById('firstName').value.trim();
@@ -33,20 +33,19 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // (Opcional) Aquí podrías validar formato de correo, longitud de contraseña, etc.
-
-    // --- 3) Armamos el payload en formato JSON ---
+    // En este punto, ya tenemos todos los datos necesarios. Creamos el payload:
     const payload = {
       nombre: nombre,
       apellido: apellido,
-      correo: correo,
-      contrasena: contrasena,
+      email: correo,          // clave “email” para que coincida con la columna
+      contrasena: contrasena, // clave “contrasena” que PHP convertirá a “contraseña”
       rol: rol
     };
 
-    // --- 4) Enviamos al API PHP ---
+    // --- 3) Enviamos al API PHP ---
     try {
-      const resp = await fetch('api/api_registrar_usuario.php', {
+      // IMPORTANTE: ruta absoluta bajo tu App Service o, en local, "localhost/..."
+      const resp = await fetch('/api/api_regitrar_usuario.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -57,13 +56,15 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error(`HTTP error! status: ${resp.status}`);
       }
 
+      // La respuesta en JSON ({"exito":true} o {"exito":false,"error": "..."} )
       const data = await resp.json();
 
-      // --- 5) Mostramos resultado en pantalla ---
+      // --- 4) Mostramos resultado en pantalla ---
       if (data.exito) {
         mensajeDiv.textContent = '¡Registro exitoso!';
         mensajeDiv.style.color = 'green';
-        // Opcional: redirigir o limpiar formulario
+        // (Opcional) Limpiar formulario o redirigir:
+        // form.reset();
         // window.location.href = 'index.html';
       } else {
         mensajeDiv.textContent = 'Error: ' + data.error;
