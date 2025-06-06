@@ -1,8 +1,8 @@
 <?php
 // Le decimos al cliente que la respuesta será JSON
 header('Content-Type: application/json');
-// En caso de que quieras aceptar peticiones desde otros orígenes (CORS)
-header('Access-Control-Allow-Origin: *');
+// Si necesitas aceptar peticiones CORS desde otros orígenes, descomenta la siguiente línea:
+// header('Access-Control-Allow-Origin: *');
 
 // Leemos el JSON que envía el front-end
 $data = json_decode(file_get_contents('php://input'), true);
@@ -10,11 +10,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 // Validación básica de campos recibidos
 $nombre     = trim($data['nombre']     ?? '');
 $apellido   = trim($data['apellido']   ?? '');
-$correo     = trim($data['correo']     ?? '');
+$email      = trim($data['email']      ?? '');
 $contrasena = $data['contrasena']      ?? '';
 $rol        = $data['rol']             ?? '';
 
-if (!$nombre || !$apellido || !$correo || !$contrasena || !$rol) {
+if (!$nombre || !$apellido || !$email || !$contrasena || !$rol) {
     echo json_encode([
       'exito' => false,
       'error' => 'Faltan campos obligatorios'
@@ -25,8 +25,8 @@ if (!$nombre || !$apellido || !$correo || !$contrasena || !$rol) {
 // Hasheamos la contraseña antes de almacenarla
 $hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-// ** Configura aquí tu conexión a la base de datos ** 
-// (en este ejemplo, a Azure SQL Server; si fuera MySQL local, cambiaría el DSN).
+// ─── CONFIGURA AQUÍ TU CONEXIÓN A LA BASE DE DATOS ───
+// En tu caso, Azure SQL Server. Asegura que estos datos coincidan con tu servidor:
 $serverName = 'sl-sungexp-prod-0001.database.windows.net';
 $database   = 'database-sungexp';
 $username   = 'adminuserdb';
@@ -37,9 +37,9 @@ try {
     $conn = new PDO("sqlsrv:server=$serverName;Database=$database", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // 1) Verificamos que no exista ya un usuario con el mismo correo
-    $stmt = $conn->prepare("SELECT id FROM usuarios WHERE correo = ?");
-    $stmt->execute([$correo]);
+    // 1) Verificamos que no exista ya un usuario con el mismo correo en dbo.Usuario
+    $stmt = $conn->prepare("SELECT id_usuario FROM dbo.Usuario WHERE email = ?");
+    $stmt->execute([$email]);
     if ($stmt->fetch()) {
         echo json_encode([
           'exito' => false,
@@ -48,12 +48,15 @@ try {
         exit;
     }
 
-    // 2) Insertamos el nuevo usuario
+    // 2) Insertamos el nuevo usuario en dbo.Usuario
+    //    Usamos corchetes en [contraseña] porque la columna tiene tilde
     $stmt = $conn->prepare("
-      INSERT INTO usuarios (nombre, apellido, correo, contrasena, rol)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO dbo.Usuario
+        (nombre, apellido, email, [contraseña], rol)
+      VALUES
+        (?, ?, ?, ?, ?)
     ");
-    $stmt->execute([$nombre, $apellido, $correo, $hash, $rol]);
+    $stmt->execute([$nombre, $apellido, $email, $hash, $rol]);
 
     // 3) Si todo salió bien, devolvemos éxito
     echo json_encode([
