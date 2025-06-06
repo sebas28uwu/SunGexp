@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 3) Enviamos al API PHP ---
     try {
       // IMPORTANTE: ruta absoluta bajo tu App Service o, en local, "localhost/..."
-      const resp = await fetch('/api/api_regitrar_usuario.php', {
+      const resp = await fetch('api/api_regitrar_usuario.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
