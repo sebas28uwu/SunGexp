@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 4) Enviamos al API PHP ---
     try {
-      const resp = await fetch('api_registrar_usuario.php', {
+      const resp = await fetch('api/api_registrar_usuario.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
