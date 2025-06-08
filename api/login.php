@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // si necesitas CORS
+header('Access-Control-Allow-Origin: *');
 
-// Leer JSON recibido
-$input = json_decode(file_get_contents('php://input'), true);
+// 1) Leer JSON
+$input  = json_decode(file_get_contents('php://input'), true);
 $correo = trim($input['correo']   ?? '');
 $pass   = $input['password']      ?? '';
 
@@ -12,7 +12,7 @@ if (!$correo || !$pass) {
   exit;
 }
 
-// Conexión PDO (igual que tu registrar)
+// 2) Conexión PDO (igual que antes)…
 $server = 'sl-sungexp-prod-0001.database.windows.net';
 $db     = 'database-sungexp';
 $user   = 'adminuserdb';
@@ -22,15 +22,17 @@ try {
   $conn = new PDO("sqlsrv:server=$server;Database=$db", $user, $pwd);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  // 1) Buscar usuario por correo
-  $stmt = $conn->prepare("SELECT id_usuario, contrasena, rol FROM usuarios WHERE correo = ?");
+  // 3) **Usar el nombre de tabla correcto** (dbo.Usuario) y la columna email
+  $stmt = $conn->prepare(
+    "SELECT id_usuario, contrasena, rol
+     FROM dbo.Usuario
+     WHERE email = ?"
+  );
   $stmt->execute([$correo]);
 
   if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    // 2) Verificar contraseña
+    // 4) Verificar hash de contraseña
     if (password_verify($pass, $row['contrasena'])) {
-      // Login exitoso
-      // Opcional: session_start(); $_SESSION['user_id']=$row['id_usuario'];
       echo json_encode([
         'exito'   => true,
         'usuario' => [
@@ -42,10 +44,14 @@ try {
     }
   }
 
-  // Si llegamos aquí, fallo de credenciales
+  // 5) Credenciales inválidas
   echo json_encode(['exito'=>false, 'error'=>'Correo o contraseña inválidos.']);
 
 } catch (Exception $e) {
-  echo json_encode(['exito'=>false, 'error'=>'Error interno: '.$e->getMessage()]);
+  // 6) Error interno
+  echo json_encode([
+    'exito' => false,
+    'error' => 'Error interno: '.$e->getMessage()
+  ]);
 }
 ?>
