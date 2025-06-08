@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Órdenes - Azure App</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="container">
+
+  <h1 class="mt-5 mb-4 text-center">Gestión de Órdenes</h1>
+
+  <!-- Formulario para agregar una orden -->
+  <form id="formOrden" class="mb-4">
+    <div class="mb-3">
+      <label for="id_cliente" class="form-label">ID Cliente</label>
+      <input
+        type="number"
+        class="form-control"
+        id="id_cliente"
+        required
+      >
+    </div>
+    <div class="mb-3">
+      <label for="total" class="form-label">Total</label>
+      <input
+        type="number"
+        step="0.01"
+        class="form-control"
+        id="total"
+        required
+      >
+    </div>
+    <div class="mb-3">
+      <label for="estado" class="form-label">Estado</label>
+      <select class="form-select" id="estado" required>
+        <option value="pendiente">Pendiente</option>
+        <option value="enviado">Enviado</option>
+        <option value="entregado">Entregado</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Agregar Orden</button>
+  </form>
+
+  <!-- Botón para cargar todas las órdenes -->
+  <button id="btnRefrescar" class="btn btn-primary mb-4">
+    Ver Todas las Órdenes
+  </button>
+
+  <!-- Área para mostrar resultados -->
+  <div id="resultado"></div>
+
+  <!-- JS de lógica -->
+  <script>
+    const API_BASE   = 'http://20.11.51.152';
+    const apiAgregar = API_BASE + '/api_agregar_orden.php';
+    const apiListar  = API_BASE + '/listar_ordenes.php';
+
+    // Enviar nueva orden
+    document.getElementById('formOrden').addEventListener('submit', e => {
+      e.preventDefault();
+      const id_cliente = +document.getElementById('id_cliente').value;
+      const total      = +document.getElementById('total').value;
+      const estado     = document.getElementById('estado').value;
+
+      fetch(apiAgregar, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_cliente, total, estado })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('✅ Orden agregada correctamente.');
+          e.target.reset();
+        } else {
+          alert(`❌ Error: ${data.message}`);
+        }
+      })
+      .catch(err => alert(`❌ Error de red: ${err}`));
+    });
+
+    // Cargar todas las órdenes
+    document.getElementById('btnRefrescar').addEventListener('click', () => {
+      fetch(apiListar)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            let html = `
+              <h3>Órdenes Registradas</h3>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+            `;
+            data.data.forEach(o => {
+              html += `
+                <tr>
+                  <td>${o.id_orden}</td>
+                  <td>${o.id_cliente}</td>
+                  <td>${o.total}</td>
+                  <td>${o.estado}</td>
+                  <td>${o.fecha}</td>
+                </tr>
+              `;
+            });
+            html += `</tbody></table>`;
+            document.getElementById('resultado').innerHTML = html;
+          } else {
+            document.getElementById('resultado').innerHTML = `
+              <div class="alert alert-danger">
+                ❌ Error: ${data.message}
+              </div>
+            `;
+          }
+        })
+        .catch(err => {
+          document.getElementById('resultado').innerHTML = `
+            <div class="alert alert-danger">❌ Error de red: ${err}</div>
+          `;
+        });
+    });
+  </script>
+
+</body>
+</html>
