@@ -28,7 +28,7 @@ $(document).ready(function () {
 // Nos aseguramos de que el DOM esté cargado antes de manipularlo+
 
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("formRegister");
+  const form = document.getElementById("form-register");
   const mensajeDiv = document.getElementById("mensaje");
 
   form.onsubmit = async function (e) {
