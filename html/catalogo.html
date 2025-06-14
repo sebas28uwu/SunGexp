@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo – SunGEXP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="styles/styles.css" rel="stylesheet">
+  <link href="styles/styles_catalog.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <header class="top-bar">
+    <div class="container d-flex align-items-center justify-content-between px-0">
+      <div class="logo">
+        <img src="img/logo.png" alt="SunGEXP" height="40">
+      </div>
+      <div class="search flex-grow-1 mx-3">
+        <input type="text" class="form-control" placeholder="Buscar productos, marcas y más...">
+      </div>
+      <div class="actions d-flex align-items-center gap-3">
+        <a href="register.html" class="action-link">Crea tu cuenta</a>
+        <a href="login.html" class="action-link">Ingresa</a>
+        <a href="catalogo.html" class="action-link">Mis Compras</a>
+        <i class="fas fa-shopping-cart cart"></i>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-fill">
+    <div class="container-fluid px-0">
+      <div class="row g-0">
+        <aside class="col-12 col-md-3 sidebar p-4">
+          <h5>Categorías</h5>
+          <ul class="list-unstyled mb-4">
+            <li><a href="#">Todos</a></li>
+            <li><a href="#">Oferta del día</a></li>
+            <li><a href="#">Oferta relámpago</a></li>
+          </ul>
+          <hr>
+          <h6>Por Categoría</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Electrónica</a></li>
+            <li><a href="#">Computación</a></li>
+            <li><a href="#">Celulares</a></li>
+            <li><a href="#">Audio</a></li>
+            <li><a href="#">Hogar</a></li>
+            <li><a href="#">Deportes</a></li>
+          </ul>
+        </aside>
+
+        <section class="col-12 col-md-9 p-4">
+          <h2 class="section-title">Ofertas</h2>
+          <div class="row g-4" id="offersRow"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer id="contacto" class="mt-auto py-4 text-center">
+    <div class="container">
+      <p class="mb-1">¿Tienes dudas? Escríbenos a <a href="mailto:soporte@sungexp.com">soporte@sungexp.com</a></p>
+      <small>© 2025 SunGEXP. Todos los derechos reservados.</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  (function(){
+    const API = 'https://20.11.51.152';
+    document.addEventListener('DOMContentLoaded', ()=>{
+      fetch(`${API}/listar_productos.php`)
+        .then(r=>r.json())
+        .then(j=>{
+          if(j.status!=='success') return;
+          const row = document.getElementById('offersRow');
+          row.innerHTML = '';
+          j.data.forEach(p=>{
+            const col = document.createElement('div');
+            col.className = 'col-6 col-lg-4';
+            col.innerHTML = `
+              <div class="card h-100">
+                <div class="position-relative">
+                  <img src="${p.imagen_url||'img/default.jpg'}" class="card-img-top" alt="${p.nombre}">
+                  <span class="badge bg-danger discount-badge">–${Math.round((1 - p.precio/100)*100)}%</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h6 class="card-title">${p.nombre}</h6>
+                  <div class="mb-2">
+                    <small class="text-muted text-decoration-line-through">S/ ${(p.precio*1.2).toFixed(2)}</small>
+                    <span class="fw-bold ms-2">S/ ${p.precio.toFixed(2)}</span>
+                  </div>
+                  <div class="mt-auto"><span class="text-success"><i class="fas fa-truck-fast"></i> Envío gratis</span></div>
+                </div>
+              </div>`;
+            row.appendChild(col);
+          });
+        });
+    });
+  })();
+  </script>
+</body>
+</html>

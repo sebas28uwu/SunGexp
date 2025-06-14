@@ -1,0 +1,395 @@
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  margin: 0;
+  background: #fff;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* border: 5px solid #000; */ /* eliminado */
+  box-sizing: border-box;
+}
+
+.content-row {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 180px;
+  background: #ffe600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0 0 0;
+  /* border-right: 3px solid #000; */ /* eliminado */
+  box-sizing: border-box;
+  min-width: 130px;
+  box-shadow: 1px 0 5px #eee; /* borde muy suave opcional */
+}
+
+.sidebar .logo {
+  margin-bottom: 32px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.sidebar nav {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.sidebar nav a {
+  padding: 8px 0 8px 25px;
+  color: #111;
+  text-decoration: none;
+  font-size: 1em;
+  border-radius: 4px;
+  transition: background 0.17s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar nav a:hover {
+  background: #fff9b0;
+}
+
+.sidebar .logout {
+  margin: 28px 0 12px 0;
+  padding: 10px 0 8px 0;
+  width: 100%;
+  text-align: center;
+  color: #222;
+  font-size: 0.96em;
+  cursor: pointer;
+  border-top: 1px solid #c1b900;
+}
+
+.main-content {
+  flex: 1 1 auto;
+  background: #fff;
+  min-width: 0;
+  /* Puedes poner padding aquí */
+}
+
+.footer {
+  /* border-top: 5px solid #000; */ /* eliminado */
+  padding: 22px 0 16px 0;
+  text-align: center;
+  font-size: 2em;
+  font-family: "Comic Sans MS", "Montserrat", Arial, sans-serif;
+  background: #f8f9fa;
+}
+
+@media (max-width: 700px) {
+  .content-row {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid #ffe600;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    min-width: 0;
+    padding: 12px 0;
+    box-shadow: none;
+  }
+  .sidebar nav {
+    flex-direction: row;
+    gap: 0;
+  }
+  .sidebar nav a {
+    flex: 1 1 auto;
+    padding: 8px;
+    text-align: center;
+  }
+  .sidebar .logo,
+  .sidebar .logout {
+    display: none;
+  }
+}
+
+.footer {
+  border-top: 5px solid #000;
+  padding: 22px 0 16px 0;
+  text-align: center;
+  font-size: 2em;
+  font-family: "Comic Sans MS", "Montserrat", Arial, sans-serif;
+  background: #fff;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 700px) {
+  .content-row {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid #000;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    min-width: 0;
+    padding: 12px 0;
+  }
+  .sidebar nav {
+    flex-direction: row;
+    gap: 0;
+  }
+  .sidebar nav a {
+    flex: 1 1 auto;
+    padding: 8px;
+    text-align: center;
+  }
+  .sidebar .logo,
+  .sidebar .logout {
+    display: none;
+  }
+}
+
+/* Footer */
+.footer-basic {
+  padding: 10px;
+  background-color: #e6a700;
+  color: #000000;
+}
+
+.footer-basic ul {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.footer-basic li {
+  padding: 10px;
+}
+
+.footer-basic ul a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity: 1;
+}
+
+.footer-basic .social {
+  text-align: center;
+  padding-bottom: 25px;
+  padding-top: 10px;
+}
+
+.footer-basic .social > a {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  margin: 0 8px;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity: 0.9;
+}
+
+.footer-basic .copyright {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+/* From Uiverse.io by andrew-demchenk0 */ 
+.form {
+  --input-focus: #050505;
+  --font-color: #000000;
+  --font-color-sub: #7e7e7e;
+ 
+  padding: 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+}
+
+.title {
+  color: var(--font-color);
+  font-weight: 900;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.title span {
+  color: var(--font-color-sub);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.input {
+  width: 550px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--font-color-sub);
+  opacity: 0.8;
+}
+
+.input:focus {
+  border: 2px solid var(--input-focus);
+}
+
+.login-with {
+  display: flex;
+  gap: 20px;
+}
+
+.button-log {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  color: var(--font-color);
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--main-color);
+}
+
+.button-log:active, .button-confirm:active {
+  box-shadow: 0px 0px var(--main-color);
+  transform: translate(3px, 3px);
+}
+
+.button-confirm {
+  margin: 20px auto 0 auto;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid rgb(0, 0, 0);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--font-color);
+  cursor: pointer;
+}
+
+
+/* From Uiverse.io by Samalander0 */ 
+.card {
+  width: 320px;
+  background: #fff480;
+  color: black;
+  position: relative;
+  border-radius: 2.5em;
+  padding: 2em;
+  transition: transform 0.4s ease;
+}
+
+.card .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5em;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.card .card-top, .card .card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .card-top p, .card .card-top .card-title, .card .card-bottom p, .card .card-bottom .card-title {
+  margin: 0;
+}
+
+.card .card-title {
+  font-weight: bold;
+}
+
+.card .card-top p, .card .card-bottom p {
+  font-weight: 600;
+}
+
+.card .card-bottom {
+  align-items: flex-end;
+}
+
+.card .card-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.card .card-image svg {
+  width: 4em;
+  height: 4em;
+  transition: transform 0.4s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(0.97);
+}
+
+.card:hover .card-content {
+  transform: scale(0.96);
+}
+
+.card:hover .card-image svg {
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.9);
+}
