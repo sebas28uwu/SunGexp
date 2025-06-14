@@ -1,37 +1,181 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const btnPerfil = document.getElementById("btn-perfil");
-  const formPerfil = document.getElementById("perfil-form");
- const idUsuario = localStorage.getItem('id_usuario');
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/img/logo_icono.png"
+      sizes="48x48"
+    />
+    <title>SunGEXP – Marketplace de Emprendedores</title>
 
-    if (!idUsuario) {
-    alert('No hay usuario logueado');
-    // Opcional: redirige a login
-    window.location.href = '/login.html';
-    return;
-  }
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  btnPerfil.addEventListener("click", function (e) {
-    e.preventDefault();
-    formPerfil.style.display = "block";
-    // Si quieres ocultar otros formularios, puedes hacerlo aquí
-    // Después del login/registro exitoso...
-  // ...Tu fetch con idUsuario...
-  fetch('/api/get_usuario.php', {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id_usuario: idUsuario }),
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      document.getElementById('usuario').textContent = data.usuario.nombre || '';
-      document.getElementById('correo').textContent  = data.usuario.email || '';
-      document.getElementsByName('empresa')[0].value = data.usuario.empresa || '';
-      document.getElementsByName('tienda')[0].value  = data.usuario.tienda || '';
-      document.getElementsByName('ruc')[0].value     = data.usuario.ruc || '';
-    } else {
-      alert('Usuario no encontrado');
-    }
-  });
-  });
-});
+    <!-- CSS de bibliotecas -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Tu CSS -->
+    <link href="/styles/page_seller.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="content-row">
+        <aside class="sidebar">
+          <div class="logo">
+            <img src="/img/logo_style1.png" alt="SunGEXP" height="80" />
+          </div>
+          <nav>
+            <a href="#" id="btn-perfil"
+              ><i class="bi bi-person-lines-fill"></i> Mi perfil</a
+            >
+            <a href="#"><i class="bi bi-shop"></i> Mi tienda</a>
+            <a href="#"><i class="bi bi-tag"></i> Ventas</a>
+            <a href="#"><i class="bi bi-credit-card"></i> Facturación</a>
+            <a href="#"
+              ><i class="bi bi-bookmark-check"></i> Resumen de ordenes</a
+            >
+            <a href="#"
+              ><i class="bi bi-flag"></i> Reporte de ingresos mensual</a
+            >
+          </nav>
+          <div class="logout">SALIR</div>
+        </aside>
+        <main class="main-content" id="main-content">
+          <!-- From Uiverse.io by andrew-demchenk0 -->
+          <form class="form" id="perfil-form" style="display: none">
+            <div class="title">
+              <h2>Bienvenido/a, <span id="usuario"></span></h2>
+              <p>Correo: <span id="correo"></span></p>
+            </div>
+            <span>
+              Nombre de la empresa :
+              <input
+                class="input"
+                name="empresa"
+                placeholder="Empresa"
+                type="text"
+              />
+            </span>
+            <span>
+              RUC de la empresa :
+              <input class="input" name="ruc" placeholder="RUC" type="text" />
+            </span>
+            <span>
+              Nombre de la tienda :
+              <input
+                class="input"
+                name="tienda"
+                placeholder="Tienda"
+                type="text"
+              />
+            </span>
+            <div>
+              <button type="submit" class="button-confirm">Guardar</button>
+              <button
+                type="button"
+                class="button-confirm"
+                onclick="this.parentElement.parentElement.style.display='none';"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+          <!-- From Uiverse.io by Samalander0 -->
+          <div class="card">
+            <div class="card-content">
+              <div class="card-top">
+                <span class="card-title">01.</span>
+                <p>Lightning.</p>
+              </div>
+              <div class="card-bottom">
+                <p>Hover Me?</p>
+                <svg
+                  width="32"
+                  viewBox="0 -960 960 960"
+                  height="32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M226-160q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-414q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-668q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-image">
+              <svg
+                width="48"
+                viewBox="0 -960 960 960"
+                height="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m393-165 279-335H492l36-286-253 366h154l-36 255Zm-73 85 40-280H160l360-520h80l-40 320h240L400-80h-80Zm153-395Z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-basic">
+      <footer>
+        <div class="social">
+          <a href="#"><i class="bi bi-instagram"></i></a
+          ><a href="#"><i class="bi bi-facebook"></i></a
+          ><a href="#"><i class="bi bi-envelope"></i></a>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Inicio</a></li>
+
+            <li class="list-inline-item">
+              <a href="#">Política de privacidad</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">Política de cookies</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">Términos y condiciones</a>
+            </li>
+          </ul>
+          <p style="color: black">
+            ¿Tienes dudas? Escríbenos a
+            <a
+              style="text-decoration: none; color: black"
+              href="mailto:soporte@sungexp.com"
+              >soporte@sungexp.com</a
+            >
+          </p>
+          <p class="copyright">
+            © 2025 SunGEXP. Todos los derechos reservados.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/page_seller.js" defer></script>
+  </body>
+</html>
