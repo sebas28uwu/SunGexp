@@ -10,17 +10,24 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("/api/get_usuario.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id_usuario: usuarioId }),
+      body: JSON.stringify({ id_usuario: idUsuario }), // idUsuario debe venir del login
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          document.getElementById("empresa").value =
+          document.getElementById("usuario").textContent =
+            data.usuario.nombre || "";
+          document.getElementById("correo").textContent =
+            data.usuario.email || "";
+          document.getElementsByName("empresa")[0].value =
             data.usuario.empresa || "";
-          document.getElementById("tienda").value =
+          document.getElementsByName("tienda")[0].value =
             data.usuario.tienda || "";
-          document.getElementById("ruc").value = data.usuario.ruc || "";
+          document.getElementsByName("ruc")[0].value = data.usuario.ruc || "";
+        } else {
+          alert("Usuario no encontrado");
         }
       });
   });
 });
+
