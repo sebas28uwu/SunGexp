@@ -19,7 +19,8 @@ try {
     $conn = new PDO("sqlsrv:server=$server;Database=$db", $user, $pwd);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->prepare("SELECT nombre, email, rol FROM dbo.Usuario WHERE id_usuario = ?");
+   $stmt = $conn->prepare("SELECT nombre, email, rol, empresa, tienda, ruc FROM dbo.Usuario WHERE id_usuario = ?");
+
     $stmt->execute([$id_usuario]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
