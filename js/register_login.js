@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.exito) {
         // Ejemplo: guardas info en localStorage y rediriges
-        localStorage.setItem("user", JSON.stringify(data.usuario));
+        localStorage.setItem("id_usuario", JSON.stringify(data.usuario));
         window.location.href = "/html/page_seller.html";
       } else {
         msgLogin.textContent = data.error;
