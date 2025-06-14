@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formPerfil.style.display = "block";
     // Si quieres ocultar otros formularios, puedes hacerlo aquí
     // Después del login/registro exitoso...
-    fetch("get_usuario.php", {
+    fetch("/api/get_usuario.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id_usuario: usuarioId }),
@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         if (data.success) {
           document.getElementById("empresa").value =
-            data.usuario.nombre_empresa || "";
+            data.usuario.empresa || "";
           document.getElementById("tienda").value =
-            data.usuario.nombre_tienda || "";
+            data.usuario.tienda || "";
           document.getElementById("ruc").value = data.usuario.ruc || "";
         }
       });
