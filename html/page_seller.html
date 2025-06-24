@@ -49,7 +49,7 @@
             <a href="#" id="btn-perfil"
               ><i class="bi bi-person-lines-fill"></i> Mi perfil</a
             >
-            <a href="#"><i class="bi bi-shop"></i> Mi tienda</a>
+            <a href="#" id="btn-tienda"><i class="bi bi-shop"></i> Mi tienda</a>
             <a href="#"><i class="bi bi-tag"></i> Ventas</a>
             <a href="#"><i class="bi bi-credit-card"></i> Facturación</a>
             <a href="#"
@@ -63,11 +63,7 @@
         </aside>
         <main class="main-content" id="main-content">
           <!-- From Uiverse.io by andrew-demchenk0 -->
-          <form
-            class="form"
-            id="perfil-form"
-            style="display: none; max-width: 400px; margin: 50px auto"
-          >
+          <form class="form" id="perfil-form" style="display: none">
             <div class="title">
               <h2>Bienvenido/a, <span id="usuario"></span></h2>
               <p>Correo: <span id="correo"></span></p>
@@ -78,12 +74,12 @@
                 class="input"
                 name="empresa"
                 placeholder="Empresa"
-                type="empresa"
+                type="text"
               />
             </span>
             <span>
               RUC de la empresa :
-              <input class="input" name="ruc" placeholder="RUC" type="ruc" />
+              <input class="input" name="ruc" placeholder="RUC" type="text" />
             </span>
             <span>
               Nombre de la tienda :
@@ -91,14 +87,46 @@
                 class="input"
                 name="tienda"
                 placeholder="Tienda"
-                type="tienda"
+                type="text"
               />
             </span>
             <div>
-              <button class="button-confirm">Guardar</button>
-              <button class="button-confirm">Cancelar</button>
+              <button type="submit" class="button-confirm">Guardar</button>
+              <button
+                type="button"
+                class="button-confirm"
+                onclick="this.parentElement.parentElement.style.display='none';"
+              >
+                Cancelar
+              </button>
             </div>
           </form>
+
+          <!-- Sección MI TIENDA: inicialmente oculta -->
+          <div
+            id="tienda-section"
+            style="display: none; max-width: 650px; margin: 50px auto"
+          >
+            <h2>Mi Tienda</h2>
+            <div>
+              <strong>Nombre de la Tienda:</strong>
+              <span id="nombre-tienda"></span>
+            </div>
+            <div class="table-responsive mt-3">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-publicaciones"></tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- From Uiverse.io by Samalander0 -->
           <div class="card">
             <div class="card-content">
