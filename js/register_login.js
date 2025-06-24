@@ -93,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data.exito) {
         mensajeDiv.textContent = "¡Registro exitoso!";
         mensajeDiv.style.color = "green";
-        // (Opcional) Limpiar formulario o redirigir:
+        // Guarda el nuevo id_usuario (debe venir en la respuesta)
+        localStorage.setItem("id_usuario", data.usuario.id);
         form.reset();
         window.location.href = "/html/page_seller.html";
       } else {
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.exito) {
         // Ejemplo: guardas info en localStorage y rediriges
-         localStorage.setItem('id_usuario', data.usuario.id);
+        localStorage.setItem("id_usuario", data.usuario.id);
         window.location.href = "/html/page_seller.html";
       } else {
         msgLogin.textContent = data.error;
