@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnPerfil = document.getElementById("btn-perfil");
   const btnTienda = document.getElementById("btn-tienda");
   const formPerfil = document.getElementById("perfil-form");
-  const tiendaSection = document.getElementById("tienda-section");
+  const tiendaSection = document.getElementById("tienda-section"); 
   const idUsuario = localStorage.getItem("id_usuario");
 
   // Función para ocultar todas las secciones
