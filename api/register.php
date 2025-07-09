@@ -49,7 +49,6 @@ try {
     }
 
     // 2) Insertamos el nuevo usuario en dbo.Usuario
-    //    Usamos corchetes en [contraseña] porque la columna tiene tilde
     $stmt = $conn->prepare("
       INSERT INTO dbo.Usuario
         (nombre, apellido, email, [contraseña], rol)
@@ -58,9 +57,22 @@ try {
     ");
     $stmt->execute([$nombre, $apellido, $email, $hash, $rol]);
 
-    // 3) Si todo salió bien, devolvemos éxito
+    // 3) Obtenemos el ID del usuario recién insertado (compatible con SQL Server)
+    $id_usuario = null;
+    $stmt2 = $conn->query("SELECT SCOPE_IDENTITY() AS id");
+    if ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $id_usuario = $row['id'];
+    }
+
     echo json_encode([
-      'exito' => true
+      'exito' => true,
+      'usuario' => [
+        'id' => $id_usuario,
+        'nombre' => $nombre,
+        'apellido' => $apellido,
+        'email' => $email,
+        'rol' => $rol
+      ]
     ]);
 } catch (Exception $e) {
     // Si hubo cualquier error (conexión, SQL, etc.), devolvemos el mensaje
