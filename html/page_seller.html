@@ -63,102 +63,524 @@
         </aside>
         <main class="main-content" id="main-content">
           <!-- From Uiverse.io by andrew-demchenk0 -->
-          <form class="form" id="perfil-form" style="display: none">
-            <div class="title">
-              <h2>Bienvenido/a, <span id="usuario"></span></h2>
-              <p>Correo: <span id="correo"></span></p>
-            </div>
-            <span>
-              Nombre de la empresa :
-              <input
-                class="input"
-                name="empresa"
-                placeholder="Empresa"
-                type="text"
-              />
-            </span>
-            <span>
-              RUC de la empresa :
-              <input class="input" name="ruc" placeholder="RUC" type="text" />
-            </span>
-            <span>
-              Nombre de la tienda :
-              <input
-                class="input"
-                name="tienda"
-                placeholder="Tienda"
-                type="text"
-              />
-            </span>
-            <div>
-              <button type="submit" class="button-confirm">Guardar</button>
-              <button
-                type="button"
-                class="button-confirm"
-                onclick="this.parentElement.parentElement.style.display='none';"
-              >
-                Cancelar
-              </button>
+          <!-- Sección MI PERFIL -->
+          <form class="form" id="perfil-form" style="display: none; max-width: 600px; margin: 50px 0 50px 40px;">
+            <div style="background: #fff; border: 2px solid #ffe600; border-radius: 18px; box-shadow: 0 4px 24px 0 #ffe60022; padding: 36px 32px 28px 32px; display: flex; flex-direction: column; gap: 18px;">
+              <div class="title">
+                <h2 style="color: #ffe600; font-size: 2em; font-weight: 800; margin-bottom: 8px; text-align: left;">Bienvenido/a, <span id="usuario"></span></h2>
+                <p style="font-weight: bold; color: #222; margin-bottom: 12px;">Correo: <span id="correo"></span></p>
+              </div>
+              <div class="form-group">
+                <label for="perfil-ruc">RUC de la empresa :</label>
+                <input class="input" id="perfil-ruc" name="ruc" placeholder="RUC" type="text" style="background: #fffbe6; border: 2px solid #ffe600; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px 0 #ffe60022; font-size: 1.08em;" />
+              </div>
+              <div class="form-group">
+                <label for="perfil-tienda">Nombre de la tienda :</label>
+                <input class="input" id="perfil-tienda" name="tienda" placeholder="Tienda" type="text" style="background: #fffbe6; border: 2px solid #ffe600; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px 0 #ffe60022; font-size: 1.08em;" />
+              </div>
+              <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+                <button type="submit" class="button-confirm">Guardar</button>
+                <button type="button" class="button-confirm" onclick="this.parentElement.parentElement.parentElement.style.display='none';">Cancelar</button>
+              </div>
             </div>
           </form>
 
-          <!-- Sección MI TIENDA: inicialmente oculta -->
-          <div
-            id="tienda-section"
-            style="display: none; max-width: 650px; margin: 50px auto"
-          >
-            <h2>Mi Tienda</h2>
-            <div>
-              <strong>Nombre de la Tienda:</strong>
-              <span id="nombre-tienda"></span>
-            </div>
-            <div class="table-responsive mt-3">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                  </tr>
-                </thead>
-                <tbody id="tabla-publicaciones"></tbody>
-              </table>
+          <!-- Sección MI TIENDA: editable en línea -->
+          <div id="tienda-section" style="display: none; max-width: 700px; margin: 50px 0 50px 40px;">
+            <div style="background: #fff; border: 2px solid #ffe600; border-radius: 18px; box-shadow: 0 4px 24px 0 #ffe60022; padding: 36px 32px 28px 32px; display: flex; gap: 32px; align-items: flex-start;">
+              <div style="flex-shrink:0; display: flex; flex-direction: column; align-items: center;">
+                <img id="logo-tienda-preview" src="" alt="Logo de la tienda" style="width: 120px; height: 120px; object-fit: contain; border-radius: 18px; background: #f7f7f7; border: none; margin-bottom: 18px;" />
+                <input id="logo-tienda-input" type="text" placeholder="URL del logo" style="width: 120px; font-size: 0.98em; background: #f7f7f7; border: none; box-shadow: none; margin-top: 4px;" />
+              </div>
+              <form id="form-tienda" style="flex:1; display: flex; flex-direction: column; gap: 14px;">
+                <h2 style="color: #ffe600; font-size: 1.5em; font-weight: 800; margin-bottom: 8px; text-align: left;">Mi Tienda</h2>
+                <input id="nombre-tienda-input" type="text" placeholder="Nombre de la tienda" style="font-weight: bold; color: #b1a003; background: #fffbe6; border: 2px solid #ffe600; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px 0 #ffe60022; font-size: 1.08em;" />
+                <input id="contacto-tienda-input" type="text" placeholder="Contacto" style="color: #888; font-size: 0.98em; background: #fffbe6; border: 2px solid #ffe600; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px 0 #ffe60022;" />
+                <textarea id="desc-tienda-input" placeholder="Descripción" style="color: #666; font-size: 1em; background: #fffbe6; border: 2px solid #ffe600; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px 0 #ffe60022;"></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+                  <button type="submit">Guardar</button>
+                  <button type="button" id="cancelar-tienda-btn">Cancelar</button>
+                </div>
+              </form>
             </div>
           </div>
 
-          <!-- From Uiverse.io by Samalander0 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-top">
-                <span class="card-title">01.</span>
-                <p>Lightning.</p>
-              </div>
-              <div class="card-bottom">
-                <p>Hover Me?</p>
-                <svg
-                  width="32"
-                  viewBox="0 -960 960 960"
-                  height="32"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M226-160q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-414q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-668q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Z"
-                  ></path>
-                </svg>
+          <!-- Sección VENTAS: inicialmente oculta -->
+          <div
+            id="ventas-section"
+            style="display: none; max-width: 1200px; margin: 20px"
+            ;
+          >
+            <div class="header-row">
+              <h2 class="main-title">Todos mis productos</h2>
+              <button id="openFormBtn" class="add-btn">Agregar</button>
+            </div>
+            <div id="productCatalog" class="catalog"></div>
+          </div>
+
+          <!-- Modal para agregar producto -->
+          <div id="modal" class="modal">
+            <div class="modal-content square-modal">
+              <span id="closeModal" class="close">&times;</span>
+              <h1 class="modal-title">Agregar Producto</h1>
+              <hr class="modal-divider" />
+              <div class="form-preview-container">
+                <form id="productForm">
+                  <div class="form-col left">
+                    <div class="form-group">
+                      <label for="productImage">URL de la imagen</label>
+                      <input
+                        type="text"
+                        id="productImage"
+                        required
+                        placeholder="https://..."
+                      />
+                    </div>
+                    <img
+                      id="imagePreview"
+                      src=""
+                      alt="Vista previa"
+                      style="display: none"
+                    />
+                    <div class="form-group">
+                      <label for="productBrand">Marca</label>
+                      <input type="text" id="productBrand" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="productName">Nombre</label>
+                      <input type="text" id="productName" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="productDescription">Descripción</label>
+                      <textarea id="productDescription" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-col right">
+                    <div class="form-group">
+                      <label for="productCategory">Categoría</label>
+                      <input type="text" id="productCategory" required />
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="productPrice">Precio</label>
+                        <input
+                          type="number"
+                          id="productPrice"
+                          min="0"
+                          step="0.01"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="productStock">Stock</label>
+                        <input
+                          type="number"
+                          id="productStock"
+                          min="0"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="productDiscount">Descuento (%)</label>
+                        <input
+                          type="number"
+                          id="productDiscount"
+                          min="0"
+                          max="100"
+                          step="1"
+                        />
+                      </div>
+                    </div>
+                    <button type="submit">Agregar Producto</button>
+                  </div>
+                </form>
               </div>
             </div>
-            <div class="card-image">
-              <svg
-                width="48"
-                viewBox="0 -960 960 960"
-                height="48"
-                xmlns="http://www.w3.org/2000/svg"
+          </div>
+
+          <!-- Sección FACTURACIÓN: Elegir método de pago -->
+          <div style="display: flex; justify-content: flex-start">
+            <div
+              id="facturacion-section"
+              style="
+                display: none;
+                max-width: 420px;
+                margin: 50px 0 50px 40px;
+                text-align: left;
+                align-items: flex-start;
+              "
+            >
+              <h2 style="color: #ffcc00; text-align: left; margin-bottom: 24px">
+                Facturación
+              </h2>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  justify-content: flex-start;
+                  margin-bottom: 18px;
+                "
               >
-                <path
-                  d="m393-165 279-335H492l36-286-253 366h154l-36 255Zm-73 85 40-280H160l360-520h80l-40 320h240L400-80h-80Zm153-395Z"
-                ></path>
-              </svg>
+                <button type="button" id="tab-banco" class="tab-btn active">
+                  Banco
+                </button>
+                <button type="button" id="tab-yape" class="tab-btn">
+                  Yape/Plin
+                </button>
+              </div>
+              <form
+                id="facturacion-form"
+                style="
+                  margin-top: 0;
+                  width: 100%;
+                  max-width: 350px;
+                  text-align: left;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                "
+              >
+                <div id="form-banco">
+                  <div class="form-group">
+                    <label>Nombre del vendedor</label>
+                    <input
+                      type="text"
+                      id="facturacion-nombre-vendedor"
+                      readonly
+                      style="background: #f7f7f7; color: #222"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Nombre de la tienda</label>
+                    <input
+                      type="text"
+                      id="facturacion-nombre-tienda"
+                      readonly
+                      style="background: #f7f7f7; color: #222"
+                    />
+                  </div>
+                  <div class="form-group" style="position: relative">
+                    <label for="facturacion-cuenta"
+                      >Número de cuenta bancaria</label
+                    >
+                    <input
+                      type="text"
+                      id="facturacion-cuenta"
+                      required
+                      placeholder="Ej: 001234567890"
+                      style="padding-right: 48px"
+                    />
+                    <span
+                      id="banco-logo"
+                      style="
+                        position: absolute;
+                        right: 12px;
+                        top: 38px;
+                        width: 32px;
+                        height: 32px;
+                        display: flex;
+                        align-items: center;
+                      "
+                    ></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="facturacion-cci"
+                      >Código interbancario (CCI)</label
+                    >
+                    <input
+                      type="text"
+                      id="facturacion-cci"
+                      required
+                      placeholder="Ej: 00212345678901234567"
+                    />
+                  </div>
+                </div>
+                <div id="form-yape" style="display: none">
+                  <div class="form-group">
+                    <label>Nombre del vendedor</label>
+                    <input
+                      type="text"
+                      id="facturacion-nombre-vendedor-yape"
+                      readonly
+                      style="background: #f7f7f7; color: #222"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Nombre de la tienda</label>
+                    <input
+                      type="text"
+                      id="facturacion-nombre-tienda-yape"
+                      readonly
+                      style="background: #f7f7f7; color: #222"
+                    />
+                  </div>
+                  <div class="form-group" style="position: relative">
+                    <label for="facturacion-telefono"
+                      >Número de teléfono asociado</label
+                    >
+                    <input
+                      type="text"
+                      id="facturacion-telefono"
+                      required
+                      placeholder="Ej: 987654321"
+                      style="padding-right: 48px"
+                    />
+                    <span
+                      id="billetera-logo"
+                      style="
+                        position: absolute;
+                        right: 12px;
+                        top: 38px;
+                        width: 32px;
+                        height: 32px;
+                        display: flex;
+                        align-items: center;
+                      "
+                    ></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="billetera-select">Selecciona billetera</label>
+                    <select id="billetera-select">
+                      <option value="yape">Yape</option>
+                      <option value="plin">Plin</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" style="margin-top: 10px">Guardar</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Sección RESUMEN DE ÓRDENES -->
+          <div
+            id="resumen-section"
+            style="
+              display: none;
+              max-width: 1100px;
+              margin: 50px 0 50px 40px;
+              display: flex;
+              gap: 40px;
+              align-items: flex-start;
+            "
+          >
+            <!-- Columna izquierda: Filtro y lista de órdenes -->
+            <div style="flex: 1; min-width: 320px">
+              <h2 style="color: #ffcc00; margin-bottom: 18px">
+                Resumen de órdenes
+              </h2>
+              <div style="margin-bottom: 16px">
+                <label for="resumen-fecha">Filtrar por fecha:</label>
+                <input type="date" id="resumen-fecha" />
+              </div>
+              <table style="width: 100%; border-collapse: collapse">
+                <thead>
+                  <tr style="background: #fffbe6; color: #b1a003">
+                    <th style="padding: 8px; text-align: left">Producto</th>
+                    <th style="padding: 8px; text-align: left">Cantidad</th>
+                    <th style="padding: 8px; text-align: left">Precio</th>
+                    <th style="padding: 8px; text-align: left">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody id="resumen-lista"></tbody>
+              </table>
+              <div style="margin-top: 12px; font-weight: bold; color: #222">
+                Total ventas del día: S/
+                <span id="resumen-total-dia">0.00</span>
+              </div>
+            </div>
+            <!-- Columna derecha: Objetivo, aporte y gráfico -->
+            <div
+              style="
+                flex: 1;
+                min-width: 320px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 24px;
+                height: 100%;
+              "
+            >
+              <div style="width: 100%; text-align: center">
+                <label for="resumen-objetivo"
+                  >Objetivo de ventas diario (S/):</label
+                >
+                <input
+                  type="number"
+                  id="resumen-objetivo"
+                  style="width: 120px; margin-left: 8px"
+                  min="0"
+                />
+              </div>
+              <div style="width: 100%; text-align: center">
+                <span style="font-weight: bold"
+                  >Aporte del día al objetivo diario:</span
+                >
+                <span id="resumen-aporte-dia">0%</span> (<span
+                  id="resumen-aporte-monto"
+                  >S/ 0.00</span
+                >)
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  max-width: 320px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  min-height: 240px;
+                "
+              >
+                <canvas id="resumen-grafico" width="220" height="220"></canvas>
+              </div>
+              <div style="width: 100%; text-align: center">
+                <label for="resumen-nombre-grafico">Nombre del gráfico:</label>
+                <input
+                  type="text"
+                  id="resumen-nombre-grafico"
+                  style="width: 220px; margin-left: 8px"
+                  value="Avance diario de ingresos"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección REPORTE DE INGRESOS MENSUAL -->
+          <div
+            id="reporte-mensual-section"
+            style="
+              display: none;
+              max-width: 1100px;
+              margin: 50px 0 50px 40px;
+              padding-right: 40px;
+            "
+          >
+            <h2 style="color: #ffcc00; margin-bottom: 18px">
+              Reporte de ingresos mensual
+            </h2>
+            <div
+              style="
+                display: flex;
+                gap: 24px;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                margin-bottom: 24px;
+              "
+            >
+              <div>
+                <label style="font-weight: bold" for="select-periodo"
+                  >Periodo principal:</label
+                ><br />
+                <select id="select-periodo" style="min-width: 120px">
+                  <option value="7">Últimos 7 días</option>
+                  <option value="15">Últimos 15 días</option>
+                  <option value="30">Últimos 30 días</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-weight: bold" for="select-mes">Mes:</label
+                ><br />
+                <select id="select-mes" style="min-width: 80px">
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-weight: bold" for="select-anio">Año:</label
+                ><br />
+                <select id="select-anio" style="min-width: 80px">
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-weight: bold" for="select-comparar"
+                  >Comparar con:</label
+                ><br />
+                <select id="select-comparar" style="min-width: 140px">
+                  <option value="anterior">Período anterior</option>
+                  <option value="mismo_mes_anio_anterior">
+                    Mismo mes año anterior
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div id="reporte-metricas" class="metricas-grid">
+              <div class="metrica-card">
+                <div class="metrica-label">
+                  Ventas brutas
+                  <span
+                    class="metrica-help"
+                    title="Suma total de ingresos en el periodo"
+                    >?</span
+                  >
+                </div>
+                <div class="metrica-valor" id="metrica-ventas-brutas">
+                  S/ 0.00
+                </div>
+                <div class="metrica-porcentaje">—%</div>
+              </div>
+              <div class="metrica-card">
+                <div class="metrica-label">
+                  Unidades vendidas
+                  <span
+                    class="metrica-help"
+                    title="Cantidad total de productos vendidos"
+                    >?</span
+                  >
+                </div>
+                <div class="metrica-valor" id="metrica-unidades">0</div>
+                <div class="metrica-porcentaje">—%</div>
+              </div>
+              <div class="metrica-card">
+                <div class="metrica-label">
+                  Precio promedio por unidad
+                  <span
+                    class="metrica-help"
+                    title="Ventas brutas dividido entre unidades vendidas"
+                    >?</span
+                  >
+                </div>
+                <div class="metrica-valor" id="metrica-prom-unidad">
+                  S/ 0.00
+                </div>
+                <div class="metrica-porcentaje">—%</div>
+              </div>
+              <div class="metrica-card">
+                <div class="metrica-label">
+                  Cantidad de ventas
+                  <span class="metrica-help" title="Número de ventas realizadas"
+                    >?</span
+                  >
+                </div>
+                <div class="metrica-valor" id="metrica-cant-ventas">0</div>
+                <div class="metrica-porcentaje">—%</div>
+              </div>
+              <div class="metrica-card">
+                <div class="metrica-label">
+                  Precio promedio por venta
+                  <span
+                    class="metrica-help"
+                    title="Ventas brutas dividido entre cantidad de ventas"
+                    >?</span
+                  >
+                </div>
+                <div class="metrica-valor" id="metrica-prom-venta">S/ 0.00</div>
+                <div class="metrica-porcentaje">—%</div>
+              </div>
             </div>
           </div>
         </main>
@@ -202,6 +624,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/page_seller.js" defer></script>
   </body>
 </html>
