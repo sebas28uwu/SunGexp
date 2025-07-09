@@ -114,12 +114,19 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("usuario_nombre", data.usuario.nombre);
         localStorage.setItem("usuario_rol", data.usuario.rol);
         
+        console.log("Usuario registrado:", data.usuario);
+        console.log("Rol del usuario:", data.usuario.rol);
+        console.log("Tipo de rol:", typeof data.usuario.rol);
+        
         setTimeout(() => {
           form.reset();
+          console.log("Redirigiendo usuario con rol:", data.usuario.rol);
           if (data.usuario.rol === 'vendedor') {
-            window.location.href = "/html/page_seller.html";
+            console.log("Redirigiendo a page_seller.html");
+            window.location.replace("/html/page_seller.html");
           } else {
-            window.location.href = "/index.html";
+            console.log("Redirigiendo a index.html");
+            window.location.replace("/index.html");
           }
         }, 1500);
       } else {
