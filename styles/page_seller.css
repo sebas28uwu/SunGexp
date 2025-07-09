@@ -77,6 +77,7 @@ body {
   background: #fff;
   min-width: 0;
   /* Puedes poner padding aquí */
+  padding-left: 5%;
 }
 
 .footer {
@@ -251,7 +252,8 @@ body {
 }
 
 .input {
-  width: 550px;
+  width: 100% !important;
+  max-width: 550px !important;
   height: 40px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
@@ -318,6 +320,13 @@ body {
   cursor: pointer;
 }
 
+.form-group {
+  width: 100%;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+}
 
 /* From Uiverse.io by Samalander0 */ 
 .card {
@@ -392,4 +401,833 @@ body {
 
 .card:active {
   transform: scale(0.9);
+}
+
+.ventas-section {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  margin: 32px auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 24px #0001;
+}
+
+.ventas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ventas-header h2 {
+  color: #ffe600;
+  font-size: 2em;
+  margin: 0;
+}
+
+.ventas-agregar-btn {
+  background: #ffe600;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ventas-agregar-btn:hover {
+  background: #fff480;
+}
+
+.ventas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.venta-card {
+  background: #fffde7;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 20px 24px;
+  min-width: 260px;
+  max-width: 320px;
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.venta-info {
+  font-size: 1em;
+  color: #222;
+}
+
+.venta-producto {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.venta-fecha, .venta-cantidad, .venta-total {
+  color: #888;
+  font-size: 0.98em;
+}
+.venta-total {
+  color: #2ecc40;
+  font-weight: bold;
+}
+
+/* --- ESTILOS INTEGRADOS DE AGREGAR PRODUCTO PARA SECCIÓN VENTAS --- */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+    border-bottom: 3px solid #ffcc00;
+    padding-bottom: 18px;
+}
+.main-title {
+    color: #ffcc00;
+    font-size: 1.5em;
+    font-weight: 900;
+    letter-spacing: 1.7px;
+    margin: 0;
+    text-shadow: 0 2px 16px rgba(255,204,0,0.13);
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+.add-btn {
+    background: linear-gradient(90deg, #ffe066 0%, #ffcc00 100%);
+    color: #222;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 400;
+    box-shadow: 0 2px 16px rgba(255,204,0,0.15);
+    transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+    outline: none;
+    letter-spacing: 0.5px;
+}
+.add-btn:hover, .add-btn:focus {
+    background: linear-gradient(90deg, #ffcc00 0%, #ffe066 100%);
+    color: #111;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 24px rgba(255,204,0,0.18);
+}
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 40px;
+    background: linear-gradient(120deg, #fffbe6 0%, #fff 100%);
+    border-radius: 20px;
+    padding: 36px 40px;
+    min-height: 220px;
+    box-shadow: 0 2px 18px rgba(255,204,0,0.06);
+    transition: box-shadow 0.2s;
+    animation: fadeInCatalog 0.5s;
+}
+@keyframes fadeInCatalog {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 1200px) {
+    .catalog {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 900px) {
+    .catalog {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .catalog {
+        grid-template-columns: 1fr;
+    }
+}
+.catalog p {
+    grid-column: 1/-1;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.22em;
+    margin-top: 44px;
+    opacity: 0.85;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+.product-card {
+    height: 320px;
+    min-height: 320px;
+    max-width: 220px;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+}
+.product-card:hover {
+    box-shadow: 0 12px 36px rgba(255,204,0,0.22), 0 4px 18px rgba(0,0,0,0.10);
+    border: 2.5px solid #ffcc00;
+    transform: translateY(-4px) scale(1.03);
+    background: #fffde7;
+}
+.product-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.product-card-img-section {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f7f7;
+    width: 100%;
+    border-bottom: 1.5px solid #ececec;
+    padding: 0;
+}
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #fff;
+    display: block;
+    max-width: 100px;
+    max-height: 100px;
+    margin: 0 auto;
+}
+.product-card-info-section {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12px 14px 10px 14px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+}
+.product-brand {
+    font-size: 0.85em;
+    color: #888;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.product-name {
+    font-size: 1.18em;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 2px;
+    margin-top: 0;
+}
+.product-category {
+    font-size: 0.98em;
+    color: #b1a003;
+    margin-bottom: 2px;
+}
+.product-description {
+    font-size: 0.97em;
+    color: #444;
+    margin-bottom: 4px;
+}
+.product-price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+.product-price {
+    font-size: 1.18em;
+    font-weight: 800;
+    color: #009933;
+}
+.product-old-price {
+    font-size: 1em;
+    color: #888;
+    text-decoration: line-through;
+    margin-left: 2px;
+}
+.product-discount {
+    font-size: 0.98em;
+    color: #d32f2f;
+    font-weight: 700;
+    background: #fff0f0;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-left: 2px;
+}
+.product-stock {
+    font-size: 0.98em;
+    color: #888;
+    margin-bottom: 2px;
+}
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: #fff;
+    color: #bbb;
+    border: none;
+    padding: 5px 7px 5px 7px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 900;
+    transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.delete-btn:hover, .delete-btn:focus {
+    background: #ffe066;
+    color: #a71d2a;
+    transform: scale(1.13);
+    box-shadow: 0 4px 16px rgba(255,204,0,0.18);
+}
+.delete-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.18);
+    align-items: center;
+    justify-content: center;
+}
+.modal.active {
+    display: flex;
+}
+.square-modal {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.10);
+    border: 2px solid #ffcc00;
+    padding: 32px 40px 24px 40px;
+    width: 100%;
+    max-width: 800px;
+    min-width: 320px;
+    min-height: 0;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.7em;
+    color: #ffcc00;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s, transform 0.15s;
+    outline: none;
+    z-index: 2;
+}
+.close:hover, .close:focus {
+    color: #a71d2a;
+    transform: scale(1.15);
+}
+#productForm {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
+    align-items: flex-start;
+    justify-content: center;
+}
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1 1 0;
+}
+.form-col.left {
+    align-items: stretch;
+    min-width: 300px;
+    max-width: 260px;
+}
+.form-col.right {
+    align-items: stretch;
+    min-width: 200px;
+    flex: 2 1 0;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+    flex: 1 1 100%;
+}
+.form-group label {
+    margin-bottom: 2px;
+    color: #ffcc00;
+    font-weight: 700;
+    font-size: 0.98em;
+    letter-spacing: 0.1px;
+}
+.form-group input,
+.form-group textarea {
+    padding: 8px 9px;
+    border: 1.2px solid #ffec99;
+    border-radius: 6px;
+    font-size: 1em;
+    background: #fffbe6;
+    color: #222;
+    transition: border 0.2s, box-shadow 0.2s;
+    outline: none;
+    margin-bottom: 0;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    border: 1.2px solid #ffcc00;
+    box-shadow: 0 2px 8px rgba(255,204,0,0.10);
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 32px;
+    max-height: 70px;
+}
+#imagePreview {
+    max-width: 160px;
+    max-height: 160px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 16px auto 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+#productForm button[type="submit"] {
+    background: linear-gradient(90deg, #ffe066 0%, #ffcc00 100%);
+    color: #222;
+    border: none;
+    padding: 10px 0;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.08em;
+    font-weight: 400;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    outline: none;
+    box-shadow: 0 1px 6px rgba(255,204,0,0.08);
+    letter-spacing: 0.2px;
+    margin-top: 8px;
+}
+#productForm button[type="submit"]:hover {
+    background: linear-gradient(90deg, #ffcc00 0%, #ffe066 100%);
+    color: #111;
+    transform: scale(1.04);
+}
+@media (max-width: 700px) {
+    .square-modal {
+        max-width: 98vw;
+        padding: 10px 2vw 2vw 2vw;
+    }
+    #productForm {
+        flex-direction: column;
+        gap: 10px;
+        max-width: 98vw;
+    }
+    .form-col.left, .form-col.right {
+        min-width: unset;
+        max-width: unset;
+    }
+}
+.modal-title {
+    color: #ffcc00;
+    text-align: center;
+    margin-bottom: 2px;
+    font-size: 1.3em;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.main-title, .modal-title {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 400;
+}
+
+/* --- ESTILOS TARJETA DE CRÉDITO PARA FACTURACIÓN --- */
+#card-container {
+    width: 350px;
+    height: 190px;
+    perspective: 1000px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+#card {
+    width: 100%;
+    height: 100%;
+    color: white;
+    transition: 1s;
+    position: relative;
+    border-radius: 10px;
+    perspective: 1000px;
+    font-family: calibri;
+    transform-style: preserve-3d;
+}
+#front,
+#back {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    background: linear-gradient(55deg, #0b0b0bfc 45%, rgb(25 25 25) 40%);
+}
+#back {
+    transform: rotateY(180deg);
+}
+#front::after,
+#front::before,
+#back::after,
+#back::before {
+    content: '';
+    width: 100%;
+    height: 350px;
+    position: absolute;
+}
+#front::before,
+#back::before {
+    left: -1%;
+    transform: rotate(90deg);
+    border-radius: 50% 95% 0% 100%;
+    background: rgb(255 255 255 / 3%);
+}
+#front::after,
+#back::after {
+    height: 100%;
+    right: -50%;
+    top: -50%;
+    border-radius: 100% 0 100% 80%;
+    border: 1px solid rgb(239, 239, 239);
+}
+.reflection {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: 1s;
+}
+.reflection::before {
+    z-index: 0;
+    top: 50%;
+    content: '';
+    left: -50%;
+    height: 360px;
+    position: absolute;
+    background: #ffffff;
+    transform: translate(-50%, -50%) rotate(50deg);
+    box-shadow: 0px 0px 10px 10px #ffffff;
+}
+.type {
+    top: 10%;
+    margin-left: 15px;
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(62deg, #ffffff 0%, #000000 100%);
+    position: relative;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+.title-text {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+.details {
+    position: relative;
+    top: 35%;
+    margin-left: 15px;
+    font-size: 12px;
+}
+#hidden-number-front, #hidden-number-back {
+    margin-bottom: 10px;
+}
+#show-btn,
+#hide-btn {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-family: calibri;
+    background: rgb(28, 28, 107);
+}
+.card-logo {
+    position: absolute;
+    font-size: 10px;
+    width: 20%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    bottom: 3%;
+    right: 0%;
+}
+.card-logo::before,
+.card-logo::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+.card-logo::before {
+    background: rgba(255, 0, 0, 0.525);
+    left: 10%
+}
+.card-logo::after {
+    background: rgba(255, 213, 0, 0.584);
+    right: 10%;
+}
+.flipped {
+    transform: rotateY(-180deg);
+}
+#chip {
+    top: 10%;
+    position: absolute;
+    background: #e0ab89;
+    width: 15%;
+    height: 18%;
+    border-radius: 5px;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chip span {
+    position: absolute;
+    background: #e0ab89;
+    border: 1px solid black;
+}
+#chip span:nth-child(1) {
+    height: 100%;
+    width: 40%;
+    border-top: none;
+    border-bottom: none;
+}
+#chip span:nth-child(2) {
+    height: 60%;
+    width: 40%;
+    left: 0;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+#chip span:nth-child(3) {
+    height: 60%;
+    width: 40%;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    right: 0;
+}
+#chip span:nth-child(4) {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+#chip span:nth-child(5) {
+    aspect-ratio: 1/1;
+    width: 25%;
+    border-radius: 2px;
+}
+.move {
+    transform: translateX(700px);
+}
+#valid-date {
+    margin-left: 15px;
+}
+/* --- FIN ESTILOS TARJETA DE CRÉDITO --- */
+
+/* Eliminar estilos de tarjeta de crédito y agregar estilos para el input de cuenta bancaria y logo */
+#banco-logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 4px #0002;
+}
+#facturacion-section {
+  display: none;
+  max-width: 420px;
+  margin: 50px 0 50px 40px;
+  text-align: left;
+  align-items: flex-start;
+}
+#facturacion-section h2 {
+  text-align: left;
+  margin-left: 0;
+}
+#facturacion-section .tab-btn {
+  text-align: left;
+  margin-left: 0;
+}
+#facturacion-form {
+  align-items: flex-start;
+  margin-top: 0;
+  width: 100%;
+  max-width: 350px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#facturacion-form .form-group {
+  width: 100%;
+  text-align: left;
+}
+#facturacion-cuenta {
+  font-size: 1.1em;
+  background: #fffbe6;
+  border: 1.2px solid #ffec99;
+  border-radius: 6px;
+  padding: 8px 9px;
+  color: #222;
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  margin-bottom: 0;
+}
+#facturacion-cuenta:focus {
+  border: 1.2px solid #ffcc00;
+  box-shadow: 0 2px 8px rgba(255,204,0,0.10);
+}
+.tab-btn {
+  background: #fffbe6;
+  border: 1.2px solid #ffec99;
+  color: #b1a003;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 24px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+  text-align: left;
+}
+.tab-btn.active {
+  background: #ffcc00;
+  color: #222;
+  border-bottom: 2px solid #fff;
+}
+#billetera-logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 4px #0002;
+}
+
+/* --- Dashboard de métricas y tarjetas --- */
+.metricas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+.metrica-card {
+  background: #fff;
+  border: 2px solid #ffe600;
+  border-radius: 16px;
+  padding: 18px 20px 12px 20px;
+  box-shadow: 0 2px 8px 0 #0001;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 110px;
+  position: relative;
+}
+.metrica-label {
+  font-weight: 600;
+  color: #b1a003;
+  font-size: 1.08em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.metrica-help {
+  background: #ffe600;
+  color: #222;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #b1a003;
+}
+.metrica-valor {
+  font-size: 2.1em;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 2px;
+}
+.metrica-porcentaje {
+  color: #888;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .metricas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Botones de acción modernos (guardar, cancelar, agregar, etc.) */
+button, .button-confirm, .add-btn {
+  background: linear-gradient(90deg, #ffe600 60%, #fffbe6 100%);
+  color: #222;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.08em;
+  padding: 10px 32px;
+  margin: 6px 0;
+  box-shadow: 0 2px 12px 0 #ffe60033;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+button:hover, .button-confirm:hover, .add-btn:hover {
+  background: linear-gradient(90deg, #fffbe6 60%, #ffe600 100%);
+  color: #b1a003;
+  box-shadow: 0 4px 18px 0 #ffe60055;
+  transform: translateY(-2px) scale(1.03);
+}
+button:active, .button-confirm:active, .add-btn:active {
+  background: #ffe600;
+  color: #222;
+  box-shadow: 0 1px 4px 0 #ffe60033;
+  transform: scale(0.98);
 }
