@@ -118,17 +118,15 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Rol del usuario:", data.usuario.rol);
         console.log("Tipo de rol:", typeof data.usuario.rol);
         
-        setTimeout(() => {
-          form.reset();
-          console.log("Redirigiendo usuario con rol:", data.usuario.rol);
-          if (data.usuario.rol === 'vendedor') {
-            console.log("Redirigiendo a page_seller.html");
-            window.location.replace("/html/page_seller.html");
-          } else {
-            console.log("Redirigiendo a index.html");
-            window.location.replace("/index.html");
-          }
-        }, 1500);
+        form.reset();
+        console.log("Redirigiendo usuario con rol:", data.usuario.rol);
+        if (data.usuario.rol === 'vendedor') {
+          console.log("Redirigiendo a page_seller.html");
+          window.location.href = "/html/page_seller.html";
+        } else {
+          console.log("Redirigiendo a index.html");
+          window.location.href = "/index.html";
+        }
       } else {
         mensajeDiv.textContent = "Error: " + (data.error || "No se pudo registrar");
         mensajeDiv.style.color = "red";
@@ -180,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.exito && data.usuario) {
         localStorage.setItem("id_usuario", data.usuario.id);
-        window.location.href = "html/page_seller.html";
+        window.location.href = "/html/page_seller.html";
       } else {
         msgLogin.textContent = data.error || "Error de red o del servidor.";
       }
