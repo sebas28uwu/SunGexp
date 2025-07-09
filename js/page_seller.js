@@ -135,15 +135,17 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((res) => res.json())
             .then((datos) => {
               const tbody = document.getElementById("tabla-publicaciones");
-              tbody.innerHTML = "";
-              (datos.publicaciones || []).forEach((publi) => {
-                tbody.innerHTML += `<tr>
-      <td>${publi.nombre_producto}</td>
-      <td>${publi.tipo_producto}</td>
-      <td>${publi.precio}</td>
-      <td>${publi.stock}</td>
-    </tr>`;
-              });
+              if (tbody) {
+                tbody.innerHTML = "";
+                (datos.publicaciones || []).forEach((publi) => {
+                  tbody.innerHTML += `<tr>
+        <td>${publi.nombre_producto}</td>
+        <td>${publi.tipo_producto}</td>
+        <td>${publi.precio}</td>
+        <td>${publi.stock}</td>
+      </tr>`;
+                });
+              }
             });
           window._nombreTiendaFact = data.tienda.nombre || '';
         } else {
@@ -152,7 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
           if (descTiendaSpan) descTiendaSpan.textContent = "";
           if (contactoTiendaSpan) contactoTiendaSpan.textContent = "";
           if (nombreTiendaPerfil) nombreTiendaPerfil.textContent = "(No registrada)";
-          document.getElementById("tabla-publicaciones").innerHTML = "";
+          const tablaPublicaciones = document.getElementById("tabla-publicaciones");
+          if (tablaPublicaciones) tablaPublicaciones.innerHTML = "";
         }
       });
   }
