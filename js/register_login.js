@@ -74,22 +74,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- 3) Enviamos al API PHP ---
     try {
-      // IMPORTANTE: ruta absoluta bajo tu App Service o, en local, "localhost/..."
+      console.log("Enviando payload:", payload);
+      
       const resp = await fetch("/api/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      // Si el servidor responde con un código distinto a 200, forzamos un error
+      console.log("Respuesta del servidor:", resp.status, resp.statusText);
+
       if (!resp.ok) {
         throw new Error(`HTTP error! status: ${resp.status}`);
       }
 
-      // La respuesta en JSON ({"exito":true} o {"exito":false,"error": "..."} )
       const data = await resp.json();
+      console.log("Datos recibidos:", data);
 
-      // --- 4) Mostramos resultado en pantalla ---
       if (data.exito && data.usuario) {
         mensajeDiv.textContent = "¡Registro exitoso!";
         mensajeDiv.style.color = "green";
@@ -99,8 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         mensajeDiv.textContent = "Error: " + (data.error || "No se pudo registrar");
         mensajeDiv.style.color = "red";
+        if (data.debug) {
+          console.log("Debug info:", data.debug);
+        }
       }
     } catch (err) {
+      console.error("Error completo:", err);
       mensajeDiv.textContent = "Error de red o del servidor: " + err.message;
       mensajeDiv.style.color = "red";
     }
@@ -126,13 +131,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      console.log("Enviando login:", { correo, password: pass });
+      
       const resp = await fetch("/api/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo, password: pass }),
       });
+      
+      console.log("Respuesta login:", resp.status, resp.statusText);
+      
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
+      
+      console.log("Datos login:", data);
 
       if (data.exito && data.usuario) {
         localStorage.setItem("id_usuario", data.usuario.id);
@@ -141,8 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
         msgLogin.textContent = data.error || "Error de red o del servidor.";
       }
     } catch (err) {
+      console.error("Error login:", err);
       msgLogin.textContent = "Error de red o servidor.";
-      console.error(err);
     }
   };
 });
