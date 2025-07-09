@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.exito && data.usuario) {
         localStorage.setItem("id_usuario", data.usuario.id);
-        window.location.href = "/html/page_seller.html";
+        window.location.href = "html/page_seller.html";
       } else {
         msgLogin.textContent = data.error || "Error de red o del servidor.";
       }
