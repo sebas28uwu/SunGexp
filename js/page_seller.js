@@ -68,14 +68,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // GUARDAR DATOS DE PERFIL
   formPerfil.addEventListener("submit", function (e) {
     e.preventDefault();
-    const empresa = document.getElementsByName("empresa")[0].value;
-    const tienda = document.getElementsByName("tienda")[0].value;
-    const ruc = document.getElementsByName("ruc")[0].value;
+    const tiendaElement = document.getElementsByName("tienda")[0];
+    const rucElement = document.getElementsByName("ruc")[0];
+    
+    if (!tiendaElement || !rucElement) {
+      alert("Error: No se encontraron todos los campos del formulario");
+      return;
+    }
+    
+    const tienda = tiendaElement.value;
+    const ruc = rucElement.value;
 
     fetch("/api/vendedor/actualizar_vendedor.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id_usuario: idUsuario, empresa, tienda, ruc }),
+      body: JSON.stringify({ id_usuario: idUsuario, tienda, ruc }),
     })
       .then((res) => res.json())
       .then((data) => {
