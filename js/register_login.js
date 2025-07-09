@@ -90,15 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await resp.json();
 
       // --- 4) Mostramos resultado en pantalla ---
-      if (data.exito) {
+      if (data.exito && data.usuario) {
         mensajeDiv.textContent = "¡Registro exitoso!";
         mensajeDiv.style.color = "green";
-        // Guarda el nuevo id_usuario (debe venir en la respuesta)
         localStorage.setItem("id_usuario", data.usuario.id);
         form.reset();
         window.location.href = "/html/page_seller.html";
       } else {
-        mensajeDiv.textContent = "Error: " + data.error;
+        mensajeDiv.textContent = "Error: " + (data.error || "No se pudo registrar");
         mensajeDiv.style.color = "red";
       }
     } catch (err) {
@@ -135,12 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
 
-      if (data.exito) {
-        // Ejemplo: guardas info en localStorage y rediriges
+      if (data.exito && data.usuario) {
         localStorage.setItem("id_usuario", data.usuario.id);
         window.location.href = "/html/page_seller.html";
       } else {
-        msgLogin.textContent = data.error;
+        msgLogin.textContent = data.error || "Error de red o del servidor.";
       }
     } catch (err) {
       msgLogin.textContent = "Error de red o servidor.";
