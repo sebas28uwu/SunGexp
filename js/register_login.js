@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         form.reset();
         console.log("Redirigiendo usuario con rol:", data.usuario.rol);
-        if (data.usuario.rol === 'vendedor') {
+        if (data.usuario && data.usuario.rol && data.usuario.rol.trim().toLowerCase() === 'vendedor') {
           console.log("Redirigiendo a page_seller.html");
           window.location.href = "/html/page_seller.html";
         } else {
